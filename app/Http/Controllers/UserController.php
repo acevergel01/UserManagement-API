@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Permission;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\hash;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Helpers;
 class UserController extends Controller
 {

@@ -48,18 +48,35 @@ class TodoController extends Controller
     public function gettask(Request $request)
     {
         if (Helpers::hasPermission($request, 'todo_access')) {
-            $user = User::all('username');
-            $todo = todo::all();
-            $me = $request->user();
-            $perm = Permission::where('user_id', $me->id)->first();
-            $response = [
-                'users' => $user,
-                'todo' => $todo,
-                'todo_access' => $perm['todo_access'],
-                'todo_add' => $perm['todo_add'],
-                'todo_update' => $perm['todo_update'],
-                'todo_delete' => $perm['todo_delete'],
-            ];
+            if (Helpers::isAdmin($request)) {           
+                $user = User::all('username');
+                $todo = todo::all();
+                $me = $request->user();
+                $perm = Permission::where('user_id', $me->id)->first();
+                $response = [
+                    'users' => $user,
+                    'todo' => $todo,
+                    'todo_access' => $perm['todo_access'],
+                    'todo_add' => $perm['todo_add'],
+                    'todo_update' => $perm['todo_update'],
+                    'todo_delete' => $perm['todo_delete'],
+                ];
+            }
+            else{
+                $me = $request->user();
+                $user = $me->username;
+                $todo = todo::where('user_id', $me->id);
+                $perm = Permission::where('user_id', $me->id)->first();
+                $response = [
+                    'users' => $user,
+                    'todo' => $todo,
+                    'todo_access' => $perm['todo_access'],
+                    'todo_add' => $perm['todo_add'],
+                    'todo_update' => $perm['todo_update'],
+                    'todo_delete' => $perm['todo_delete'],
+                ];
+            }
+ 
             return $response;
         }
     }

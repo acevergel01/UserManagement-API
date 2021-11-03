@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Redirect;
 */
 
 Route::fallback(function () {
-    return Redirect::away('http://127.0.0.1:8080');
+    return Redirect::away('https://user-management2.herokuapp.com');
 });

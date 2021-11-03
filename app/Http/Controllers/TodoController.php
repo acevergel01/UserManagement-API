@@ -6,6 +6,7 @@ use App\Models\todo;
 use App\Models\User;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Helpers;
 
 class TodoController extends Controller
@@ -65,7 +66,10 @@ class TodoController extends Controller
             else{
                 $me = $request->user();
                 $user = $me->username;
-                $todo = todo::where('user_id', $user);
+                $todo = 
+                DB::table('todos')
+                ->where('assigned_to', $me->username)
+                ->get();
                 $perm = Permission::where('user_id', $me->id)->first();
                 $response = [
                     'users' => $user,

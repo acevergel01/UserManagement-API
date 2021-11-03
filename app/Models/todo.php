@@ -10,8 +10,10 @@ class todo extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
+        'subject',
         'task',
         'assigned_to',
+        'deadline',
         'notes',
         'status',
     ];

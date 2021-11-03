@@ -23,7 +23,9 @@ class TodoController extends Controller
         if (Helpers::hasPermission($request, 'todo_add')) {
             $fields = $request->validate([
                 'assigned_to' => 'required|string',
+                'subject' => 'required',
                 'task' => 'required',
+                'deadline' => 'required',
                 'notes' => 'string|nullable',
                 'status' => 'required|string',
             ]);
@@ -33,8 +35,10 @@ class TodoController extends Controller
 
             $todo = todo::create([
                 'user_id' => $id,
+                'subject' => $fields['subject'],
                 'task' => $fields['task'],
                 'assigned_to' => $fields['assigned_to'],
+                'deadline' => $fields['deadline'],
                 'notes' => $fields['notes'] ?? null,
                 'status' => $fields['status'],
             ]);
@@ -104,7 +108,9 @@ class TodoController extends Controller
         if (Helpers::hasPermission($request, 'todo_update')) {
             $fields = $request->validate([
                 'assigned_to' => 'required|string',
+                'subject' => 'required',
                 'task' => 'required',
+                'deadline' => 'required',
                 'notes' => 'string|nullable',
                 'status' => 'required|string',
             ]);

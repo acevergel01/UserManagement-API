@@ -65,7 +65,7 @@ class TodoController extends Controller
             else{
                 $me = $request->user();
                 $user = $me->username;
-                $todo = todo::where('user_id', $me->id);
+                $todo = todo::where('user_id', $user);
                 $perm = Permission::where('user_id', $me->id)->first();
                 $response = [
                     'users' => $user,
